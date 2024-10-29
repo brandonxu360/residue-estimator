@@ -1,3 +1,5 @@
+### FOR USE IN PRODUCTION ###
+
 # Use official TensorFlow image as base
 FROM tensorflow/tensorflow:2.18.0
 

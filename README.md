@@ -29,27 +29,51 @@ cd residue-estimator
 
 **Recommended**: Instead of building the Docker image from scratch, you can pull it directly from Docker Hub using the following command:
 
+Development:
 ```bash
-docker pull brandonxu/residue-estimator-model:version1.1
+docker pull brandonxu/residue-estimator-model:1.0-dev
 ```
 
-Alternatively, use the following command to build the Docker image from the Dockerfile:
-
+Production:
 ```bash
-docker build -t brandonxu/residue-estimator-model:version1.1 .
+docker pull brandonxu/residue-estimator-model:1.0-prod
+```
+
+**Alternatively**, use the following command to build the Docker image from the Dockerfile:
+
+Development:
+```bash
+sudo docker build -f Dockerfile.dev -t brandonxu/residue-estimator-model:1.0-dev .
+```
+
+Production:
+```bash
+sudo docker build -f Dockerfile.prod -t brandonxu/residue-estimator-model:1.0-prod .
 ```
 
 ### 4. Run the Container
 
-After pulling the Docker image, run the container with the following command, mapping your local data directory to the container:
+After pulling the Docker image, run the container with the following command, mapping your local data directory to the container.
 
+Development:
 ```bash
-docker run --rm -v $(pwd)/data:/app/data brandonxu/residue-estimator-model:version1.1
+docker run --rm -v "$(pwd)/data:/app/data" -v "$(pwd)/src:/app/src" brandonxu/residue-estimator-model:1.0-dev
 ```
 
-For interactive mode, use:
+Or for interactive mode,
 ```bash
-sudo docker run --rm -u $(id -u):$(id -g) -it -v "$(pwd)/data:/app/data" brandonxu/residue-estimator-model:version1.1
+docker run --rm -u $(id -u):$(id -g) -it -v "$(pwd)/data:/app/data" -v "$(pwd)/src:/app/src" brandonxu/residue-estimator-model:1.0-dev
+```
+
+Production:
+
+```bash
+docker run --rm -v "$(pwd)/data:/app/data" brandonxu/residue-estimator-model:1.0-prod
+```
+
+Or for interactive mode,
+```bash
+sudo docker run --rm -u $(id -u):$(id -g) -it -v "$(pwd)/data:/app/data" brandonxu/residue-estimator-model:1.0-prod
 ```
 
 > **Note**: If your data is stored in a different location, please replace `$(pwd)/data` with that location.
