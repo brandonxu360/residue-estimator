@@ -26,12 +26,14 @@ cd residue-estimator
 > **Note:** If your data is stored elsewhere, you will need to provide the correct location when running the container.
 
 ### 3. Pull/Build the Docker Image
+Our Docker images can be found on our [Docker Hub Repository](https://hub.docker.com/r/brandonxu/residue-estimator-model).
 
 **Recommended**: Instead of building the Docker image from scratch, you can pull it directly from Docker Hub using the following command:
 
 ```bash
 docker pull brandonxu/residue-estimator-model:version1.1
 ```
+This is recommended to guarantee image consistency.
 
 Alternatively, use the following command to build the Docker image from the Dockerfile:
 
