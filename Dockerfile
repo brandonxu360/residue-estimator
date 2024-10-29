@@ -1,5 +1,5 @@
 # Use official TensorFlow image as base
-FROM tensorflow/tensorflow
+FROM tensorflow/tensorflow:2.18.0
 
 # Set working directory
 WORKDIR /app
