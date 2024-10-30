@@ -57,18 +57,18 @@ After pulling the Docker image, run the container with the following command, ma
 
 **Development**:
 ```bash
-docker run --rm -v "$(pwd)/data:/app/data" -v "$(pwd)/src:/app/src" brandonxu/residue-estimator-model:1.0-dev
+sudo docker run --rm -v "$(pwd)/data:/app/data" -v "$(pwd)/src:/app/src" brandonxu/residue-estimator-model:1.0-dev
 ```
 
 Or for interactive mode,
 ```bash
-docker run --rm -u $(id -u):$(id -g) -it -v "$(pwd)/data:/app/data" -v "$(pwd)/src:/app/src" brandonxu/residue-estimator-model:1.0-dev
+sudo docker run --rm -u $(id -u):$(id -g) -it -v "$(pwd)/data:/app/data" -v "$(pwd)/src:/app/src" brandonxu/residue-estimator-model:1.0-dev
 ```
 
 **Production**:
 
 ```bash
-docker run --rm -v "$(pwd)/data:/app/data" brandonxu/residue-estimator-model:1.0-prod
+sudo docker run --rm -v "$(pwd)/data:/app/data" brandonxu/residue-estimator-model:1.0-prod
 ```
 
 Or for interactive mode,
