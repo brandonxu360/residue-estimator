@@ -53,32 +53,34 @@ sudo docker build -f Dockerfile.prod -t brandonxu/residue-estimator-model:1.0-pr
 
 ### 4. Run the Container
 
-After pulling the Docker image, run the container with the following command, mapping your local data directory to the container.
+After pulling the Docker image, run the container with the following Docker Compose commands.
 
 **Development**:
 ```bash
-sudo docker run --rm -v "$(pwd)/data:/app/data" -v "$(pwd)/src:/app/src" brandonxu/residue-estimator-model:1.0-dev
-```
-
-Or for interactive mode,
-```bash
-sudo docker run --rm -u $(id -u):$(id -g) -it -v "$(pwd)/data:/app/data" -v "$(pwd)/src:/app/src" brandonxu/residue-estimator-model:1.0-dev
+sudo UID=$(id -u) GID=$(id -g) docker compose run app bash
 ```
 
 **Production**:
 
 ```bash
-sudo docker run --rm -v "$(pwd)/data:/app/data" brandonxu/residue-estimator-model:1.0-prod
+sudo UID=$(id -u) GID=$(id -g) docker compose -f docker-compose.prod.yml run app bash
 ```
 
-Or for interactive mode,
+> **Note**: If your data is stored in a different location, please provide the directory as an environment variable (`DATA_DIR=<your_path>`).
+
+We use Docker Compose to streamline the command usage. However, if you prefer, a `docker run` command can 
+achieve the same result. For example:
+
 ```bash
-sudo docker run --rm -u $(id -u):$(id -g) -it -v "$(pwd)/data:/app/data" brandonxu/residue-estimator-model:1.0-prod
+sudo docker run --rm -u $(id -u):$(id -g) -it \
+  -v "$(pwd)/data:/app/data" \
+  -v "$(pwd)/src:/app/src" \
+  -v "$(pwd)/tests:/app/test" \
+  brandonxu/residue-estimator-model:1.0-dev
 ```
-
-> **Note**: If your data is stored in a different location, please replace `$(pwd)/data` with that location.
 
 For more information about running containers, please visit the Docker docs: 
+- [Docker Docs Reference - Compose Run](https://docs.docker.com/compose/reference/run)
 - [Docker Manual - Running Containers](https://docs.docker.com/engine/containers/run/)
 - [Docker Docs Reference - Run](https://docs.docker.com/reference/cli/docker/container/run/)
 

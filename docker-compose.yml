@@ -1,0 +1,22 @@
+### FOR USE IN DEVELOPMENT ###
+
+services:
+  app:
+    image: brandonxu/residue-estimator-model:1.0-dev
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    environment:
+      - UID=${UID}
+      - GID=${GID}
+    user: "${UID}:${GID}"  # Specify the user with UID and GID from environment variables
+    stdin_open: true   # Equivalent to `-i`, keeps stdin open
+    tty: true          # Equivalent to `-t`, allocates a TTY
+    volumes:
+      - ./src:/app/src
+      - ./test:/app/test
+      - ./data:/app/data
+    working_dir: /app
+    
+
+    
