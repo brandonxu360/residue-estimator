@@ -6,10 +6,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.dev
-    environment:
-      - UID=${UID}
-      - GID=${GID}
-    user: "${UID}:${GID}"  # Specify the user with UID and GID from environment variables
     stdin_open: true   # Equivalent to `-i`, keeps stdin open
     tty: true          # Equivalent to `-t`, allocates a TTY
     volumes:

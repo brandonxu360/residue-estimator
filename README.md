@@ -57,13 +57,13 @@ After pulling the Docker image, run the container with the following Docker Comp
 
 **Development**:
 ```bash
-sudo UID=$(id -u) GID=$(id -g) docker compose run app bash
+docker compose run app bash
 ```
 
 **Production**:
 
 ```bash
-sudo UID=$(id -u) GID=$(id -g) docker compose -f docker-compose.prod.yml run app bash
+docker compose -f docker-compose.prod.yml run app bash
 ```
 
 > **Note**: If your data is stored in a different location, please provide the directory as an environment variable (`DATA_DIR=<your_path>`).
@@ -72,7 +72,7 @@ We use Docker Compose to streamline the command usage. However, if you prefer, a
 achieve the same result. For example:
 
 ```bash
-sudo docker run --rm -u $(id -u):$(id -g) -it \
+sudo docker run --rm -it \
   -v "$(pwd)/data:/app/data" \
   -v "$(pwd)/src:/app/src" \
   -v "$(pwd)/tests:/app/test" \
