@@ -85,7 +85,12 @@ For more information about running containers, please visit the Docker docs:
 - [Docker Docs Reference - Run](https://docs.docker.com/reference/cli/docker/container/run/)
 
 ### 5. A Note on Development
-For local development, one can either use tooling such as VSCode's Dev Containers for a container-only development experience, or install dependencies locally using Python venv. 
+For local development, one can either use tooling such as VSCode's [Dev Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) for a container-only development experience, or install dependencies locally with Python venv. 
+
+I prefer using VSCode's Dev Container to avoid installing dependencies locally and to standardize development/production environments. Simply install the Dev Containers extension and reopen the project
+in the container. The `.devcontainer.json` is already provided in the project.
+
+For more information, please refer to the [VSCode Documentation](https://code.visualstudio.com/docs/devcontainers/containers).
 
 ## Maintainers
 
