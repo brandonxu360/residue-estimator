@@ -17,9 +17,9 @@ SAMPLE_LABEL_PATHS = [
 mocked_glob_return_value = [
     "/path/to/images/IMG_0766.jpg",
     "/path/to/images/IMG_0767.jpg",
-    "/path/to/labels/IMG_0766_res.tif",
-    "/path/to/labels/IMG_0766_sunshad.tif",
-    "/path/to/labels/IMG_0767_res.tif",
+    # "/path/to/labels/IMG_0766_res.tif",
+    # "/path/to/labels/IMG_0766_sunshad.tif",
+    # "/path/to/labels/IMG_0767_res.tif",
 ]
 
 def test_get_file_paths():
