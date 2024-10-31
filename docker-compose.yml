@@ -2,7 +2,7 @@
 
 services:
   app:
-    image: brandonxu/residue-estimator-model:1.0-dev
+    image: brandonxu/residue-estimator-model:1.1-dev
     build:
       context: .
       dockerfile: Dockerfile.dev

@@ -3,7 +3,7 @@ import glob
 from collections import defaultdict
 
 from typing import List, Tuple
-from config import ORIGINAL_DIR, LABEL_DIR 
+from .config import ORIGINAL_DIR, LABEL_DIR 
 
 def get_file_paths(root: str, file_extension: str) -> List[str]:
     """

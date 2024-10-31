@@ -31,24 +31,24 @@ cd residue-estimator
 
 Development:
 ```bash
-docker pull brandonxu/residue-estimator-model:1.0-dev
+docker pull brandonxu/residue-estimator-model:1.1-dev
 ```
 
 Production:
 ```bash
-docker pull brandonxu/residue-estimator-model:1.0-prod
+docker pull brandonxu/residue-estimator-model:1.1-prod
 ```
 
 **Alternatively**, use the following command to build the Docker image from the Dockerfile:
 
 Development:
 ```bash
-sudo docker build -f Dockerfile.dev -t brandonxu/residue-estimator-model:1.0-dev .
+sudo docker build -f Dockerfile.dev -t brandonxu/residue-estimator-model:1.1-dev .
 ```
 
 Production:
 ```bash
-sudo docker build -f Dockerfile.prod -t brandonxu/residue-estimator-model:1.0-prod .
+sudo docker build -f Dockerfile.prod -t brandonxu/residue-estimator-model:1.1-prod .
 ```
 
 ### 4. Run the Container
@@ -76,13 +76,16 @@ sudo docker run --rm -u $(id -u):$(id -g) -it \
   -v "$(pwd)/data:/app/data" \
   -v "$(pwd)/src:/app/src" \
   -v "$(pwd)/tests:/app/test" \
-  brandonxu/residue-estimator-model:1.0-dev
+  brandonxu/residue-estimator-model:1.1-dev
 ```
 
 For more information about running containers, please visit the Docker docs: 
 - [Docker Docs Reference - Compose Run](https://docs.docker.com/compose/reference/run)
 - [Docker Manual - Running Containers](https://docs.docker.com/engine/containers/run/)
 - [Docker Docs Reference - Run](https://docs.docker.com/reference/cli/docker/container/run/)
+
+### 5. A Note on Development
+For local development, one can either use tooling such as VSCode's Dev Containers for a container-only development experience, or install dependencies locally using Python venv. 
 
 ## Maintainers
 
