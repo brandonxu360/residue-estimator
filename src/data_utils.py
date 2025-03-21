@@ -1,9 +1,10 @@
 import os
 import glob
 from collections import defaultdict
-
 from typing import List, Tuple
-from .config import ORIGINAL_DIR, LABEL_DIR 
+import cv2
+import numpy as np
+import tensorflow as tf
 
 def get_file_paths(root: str, file_extension: str) -> List[str]:
     """
@@ -75,7 +76,78 @@ def get_valid_data(image_paths: List[str], label_paths: List[str]) -> List[Tuple
 
     return valid_data
 
-jpg_paths = get_file_paths(ORIGINAL_DIR, 'jpg')
-tif_paths = get_file_paths(LABEL_DIR, 'tif')
-valid_data = get_valid_data(image_paths=jpg_paths, label_paths=tif_paths)
-print(f"Found {len(valid_data)} valid data points")
+def process_labels(res_label_path: str, sunshad_label_path: str) -> np.ndarray:
+    """
+    Reads and processes two label images to combine them into a single mask 
+    with four classes:
+        - 0: Nonresidue & Shaded
+        - 1: Nonresidue & Sunlit
+        - 2: Residue & Shaded
+        - 3: Residue & Sunlit
+
+    Parameters
+    ----------
+    res_label_path : str
+        Path to the residue label file.
+    sunshad_label_path : str
+        Path to the sun/shade label file.
+
+    Returns
+    -------
+    np.ndarray
+        A combined mask with four unique class labels.
+    """
+    # Load the labels
+    res_label = cv2.imread(res_label_path, cv2.IMREAD_UNCHANGED)
+    sunshad_label = cv2.imread(sunshad_label_path, cv2.IMREAD_UNCHANGED)
+
+    # Convert labels to binary
+    res_label = np.where(res_label == 255, 1, 0)  # Nonresidue: 0, Residue: 1
+    sunshad_label = np.where(sunshad_label == 255, 1, 0)  # Shaded: 0, Sunlit: 1
+
+    # Combine the labels to get four classes
+    combined_label = 2 * res_label + sunshad_label
+    return combined_label
+
+def class_distribution(masks: np.ndarray) -> dict:
+    """
+    Calculate the distribution of classes in the given masks.
+
+    Parameters
+    ----------
+    masks : np.ndarray
+        A batch of masks.
+
+    Returns
+    -------
+    dict
+        A dictionary with class labels as keys and their counts as values.
+    """
+    unique_classes, counts = np.unique(masks, return_counts=True)
+    return dict(zip(unique_classes, counts))
+
+
+# Data Generator for Loading Batches Efficiently
+def data_generator(valid_data: List[Tuple[str, List[str]]], batch_size: int):
+    while True:
+        batch_images = []
+        batch_masks = []
+        
+        for i in range(batch_size):
+            print(valid_data[i])
+            img_path, mask_paths = valid_data[i]
+            
+            # Load image
+            img = tf.io.read_file(img_path)
+            img = tf.image.decode_image(img, channels=3)
+            img = tf.cast(img, tf.float32) / 255.0  # Convert to float32 and normalize
+            
+            # Process and resize combined label
+            combined_label = process_labels(mask_paths[0], mask_paths[1])
+            print("Class Distribution:", class_distribution(combined_label))  # Print class distribution
+            
+            batch_images.append(img)
+            batch_masks.append(combined_label)
+        
+        yield np.array(batch_images), np.array(batch_masks)
+
