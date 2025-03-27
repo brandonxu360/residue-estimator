@@ -59,11 +59,11 @@ Where `ENV_NAME` is the optional name of the conda environment (defaults to `ml-
 #### Testing
 To submit a testing job using SLURM:
 ```bash
-sbatch jobs/[test_script_name].sbatch [ENV_NAME]
+sbatch jobs/[test_script_name].sbatch [MODEL_JOB_ID] [ENV_NAME]
 ```
 Where:
+* `MODEL_JOB_ID` is the required job ID for the model to test
 * `ENV_NAME` is the optional name of the conda environment (defaults to `ml-hpc-env`)
-* `MODEL_JOB_ID` is the job ID for the model to test
 
 #### Outputs
 Model checkpoints and logs are saved to the `results/` and `logs/` directories, respectively.
