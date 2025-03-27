@@ -64,9 +64,14 @@ class MultiTaskSegmentationDataset(Dataset):
             residue_mask = residue_mask.resize(self.resize, Image.NEAREST)
             sunlit_mask = sunlit_mask.resize(self.resize, Image.NEAREST)
 
+        # Convert to numpy and normalize to 0 or 1
+        residue_mask = (np.array(residue_mask) > 127).astype(np.float32)
+        sunlit_mask = (np.array(sunlit_mask) > 127).astype(np.float32)
+
+        # Convert to tensors
         image = transforms.ToTensor()(image)
-        residue_mask = torch.from_numpy(np.array(residue_mask)).long()
-        sunlit_mask = torch.from_numpy(np.array(sunlit_mask)).long()
+        residue_mask = torch.from_numpy(residue_mask).float()
+        sunlit_mask = torch.from_numpy(sunlit_mask).float()
 
         return image, residue_mask, sunlit_mask
 

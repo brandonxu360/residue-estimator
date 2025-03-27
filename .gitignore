@@ -176,3 +176,10 @@ pyrightconfig.json
 # End of https://www.toptal.com/developers/gitignore/api/python
 
 data/
+
+# Ignore Slurm logs and models
+logs/
+results/
+*.log
+*.out
+*.err
