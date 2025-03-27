@@ -13,18 +13,28 @@
 # Load modules
 module load anaconda3 # or miniconda3
 
-# Activate conda environment
-ENV_NAME=${1:-ml-hpc-env}  # Use first argument or default to ml-hpc-env
-source activate $ENV_NAME
+# Ensure required directories exist
+mkdir -p logs
 
-MODEL_JOB_ID=${2:-65349032}  # pass training job ID or default to known one
+# MODEL_JOB_ID: required
+# ENV_NAME: optional (default: ml-hpc-env)
+if [ -z "$1" ]; then
+  echo "Error: MODEL_JOB_ID argument is required."
+  echo "Usage: sbatch your_script.sh <MODEL_JOB_ID> [ENV_NAME]"
+  exit 1
+fi
+MODEL_JOB_ID=$1
+ENV_NAME=${2:-ml-hpc-env}
+
+# Activate conda environment
+source activate $ENV_NAME
 
 # Capture start time
 start_time=$(date +%s)
 
 # Run testing script
 python -m src.scripts.test \
-    --data_root data/images_2048/label \
+    --data_root data/label \
     --model_path results/unet/best_model_${MODEL_JOB_ID}.pth
 
 # Calculate and log duration

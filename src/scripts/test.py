@@ -40,7 +40,7 @@ def main():
 
     # Load model
     model = MultiTaskUNet(n_channels=3, base_channels=64).to(device)
-    model.load_state_dict(torch.load(args.model_path, map_location=device))
+    model.load_state_dict(torch.load(args.model_path, map_location=device, weights_only=True))
     model.eval()
 
     # Accumulate metrics

@@ -13,6 +13,9 @@
 # Load modules
 module load anaconda3 # or miniconda3
 
+# Ensure required directories exist
+mkdir -p logs
+
 # Activate conda environment
 ENV_NAME=${1:-ml-hpc-env}  # Use first argument or default to ml-hpc-env
 source activate $ENV_NAME
@@ -22,7 +25,7 @@ start_time=$(date +%s)
 
 # Run training script
 python -m src.scripts.train \
-    --data_root data/images_2048/label \
+    --data_root data/label \
     --output_dir results/unet \
     --job_id $SLURM_JOB_ID  # Pass job ID
 

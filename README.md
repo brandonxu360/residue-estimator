@@ -41,7 +41,11 @@ module load anaconda3
 # Create the conda environment using the provided environment.yml file
 conda env create -f environment.yml
 ```
-5. Create the `data` folder in the root directory of the project and download `images_512` into the `data` folder from the [data source](https://emailwsu-my.sharepoint.com/:f:/r/personal/a_norouzikandelati_wsu_edu/Documents/Ph.D/Projects/Residue_estimator_app/Dataset/images_512?csf=1&web=1&e=yU5RHG) (you may need to request access)
+5. Create the `data` folder in the root directory of the project and download `images_512/label` into the `data` folder from the [data source](https://emailwsu-my.sharepoint.com/:f:/r/personal/a_norouzikandelati_wsu_edu/Documents/Ph.D/Projects/Residue_estimator_app/Dataset/images_512?csf=1&web=1&e=yU5RHG) (you may need to request access)
+```bash
+# For example, you could use scp to transfer the files
+scp -r ~/Downloads/label/ netid@kamiak.wsu.edu:~/residue-estimator/data/
+```
 
 ### Usage
 
