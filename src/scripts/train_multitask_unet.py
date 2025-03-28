@@ -14,7 +14,7 @@ def main():
     parser.add_argument('--batch_size', type=int, default=4, help='Input batch size for training')
     parser.add_argument('--epochs', type=int, default=50, help='Number of epochs to train')
     parser.add_argument('--lr', type=float, default=0.001, help='Learning rate')
-    parser.add_argument('--output_dir', type=str, default='experiments/unet', help='Directory to save model checkpoints')
+    parser.add_argument('--output_dir', type=str, default='results/unet', help='Directory to save model checkpoints')
     args = parser.parse_args()
 
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -26,8 +26,8 @@ def main():
     train_triples, val_triples, test_triples = split_dataset(triples)
 
     # Create datasets and dataloaders
-    train_dataset = MultiTaskSegmentationDataset(train_triples, resize=(512, 512))
-    val_dataset = MultiTaskSegmentationDataset(val_triples, resize=(512, 512))
+    train_dataset = MultiTaskSegmentationDataset(train_triples)
+    val_dataset = MultiTaskSegmentationDataset(val_triples)
     train_loader = DataLoader(train_dataset, batch_size=args.batch_size, shuffle=True)
     val_loader = DataLoader(val_dataset, batch_size=args.batch_size, shuffle=False)
 

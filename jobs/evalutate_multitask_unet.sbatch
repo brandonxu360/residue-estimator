@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --partition=camas           # Partition to submit to
-#SBATCH --job-name=unet_train       # Name of your job
+#SBATCH --job-name=unet_test       # Name of your job
 #SBATCH --nodes=1                   # Number of nodes
 #SBATCH --ntasks=1                  # Number of tasks per node
 #SBATCH --cpus-per-task=10          # Number of CPU cores per task
@@ -16,18 +16,26 @@ module load anaconda3 # or miniconda3
 # Ensure required directories exist
 mkdir -p logs
 
+# MODEL_JOB_ID: required
+# ENV_NAME: optional (default: ml-hpc-env)
+if [ -z "$1" ]; then
+  echo "Error: MODEL_JOB_ID argument is required."
+  echo "Usage: sbatch your_script.sh <MODEL_JOB_ID> [ENV_NAME]"
+  exit 1
+fi
+MODEL_JOB_ID=$1
+ENV_NAME=${2:-ml-hpc-env}
+
 # Activate conda environment
-ENV_NAME=${1:-ml-hpc-env}  # Use first argument or default to ml-hpc-env
 source activate $ENV_NAME
 
 # Capture start time
 start_time=$(date +%s)
 
-# Run training script
-python -m src.scripts.train \
+# Run testing script
+python -m src.scripts.evaluate_multitask_unet \
     --data_root data/label \
-    --output_dir results/unet \
-    --job_id $SLURM_JOB_ID  # Pass job ID
+    --model_path results/unet/best_model_${MODEL_JOB_ID}.pth
 
 # Calculate and log duration
 end_time=$(date +%s)
